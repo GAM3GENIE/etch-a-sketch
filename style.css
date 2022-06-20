@@ -1,0 +1,31 @@
+body{
+    min-height: 100vh;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    background: white;
+    background: url(https://s3.amazonaws.com/media.locally.net/original/HABA_ALT_2017-08-02-13-22-45.jpg);
+    background-size: cover;
+}
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto;
+    border: 3rem solid #e80000;
+}
+
+.grid-item{
+    width: 10rem;
+    height: 4.5rem;
+    background: white;
+}
+
+#start #eraser #reload{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: row;
+    flex-wrap: wrap;
+    padding: 10px;
+}
