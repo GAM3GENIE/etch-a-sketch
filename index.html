@@ -8,12 +8,18 @@
     <title>Etch-A-Sketch</title>
 </head>
 <body>
-    <div class="grid-container"></div>
+    <h1>Etch-A-Sketch</h1>
+    <div id="grid-container"></div>
     <div class="btn">
     <div id="start"></div>
     <div id="eraser"></div>
     <div id="reload"></div>
     </div>
+    <div>
+        <input type="text" placeholder="Size of Board" value="16" onchange="changeSize(this.value)" />
+        <button>Set Size</button>
+    </div>
+    <div class="error">Input must be between 2 and 100</div>
     <script src="app.js"></script>
 </body>
 </html>

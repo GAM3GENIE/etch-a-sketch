@@ -1,12 +1,28 @@
-let blocksPerPage = 16;
-let div = document.querySelector('.grid-container');
+const createCanvas = (blocksPerPage) => {
+    let container = document.querySelector('#grid-container');
+    let blocks = container.querySelectorAll('div');
+    blocks.forEach((div) => div.remove());
+    container.style.gridTemplateColumns = `repeat(${blockPerPage}, 1fr)`;
+    container.style.gridTemplateRows = `repeat(${blocksPerPage}, 1fr)`;
 
-let createCanvas = (blocksPerPage) => {
-for(let i = 0; i < blocksPerPage; i++){
-let grid = document.createElement('div');
-grid.className = 'grid-item';
-div.appendChild(grid);
+
+    let amount = blocksPerPage * blocksPerPage;
+    for(let i = 0; i < amount; i++){
+        let block = document.createElement('div');
+        block.style.backgroundColor = 'white';
+        container.insertAdjacentElement('beforeend', block);
+    }
 }
+
+createCanvas(16);
+
+let changeSize = (input) => {
+    if(input >= 2 || input <= 100){
+        document.querySelector(".error").style.display = "none";
+        createCanvas(input);
+    }else{
+        document.querySelector(".error").style.display = "flex";
+    }
 }
 
 let startColoring = (e) => {
@@ -28,38 +44,38 @@ let reloadWindow = () => {
 }
 
 let eraser = () => {
-    grid-container.addEventListener("mouseover", clear);
+    container.addEventListener('mouseover', clear);
 }
 
 let startBlack = () => {
-    grid-container.addEventListener("mouseover", startColoring);
+    container.addEventListener('mouseover', startColoring);
 }
 
 let startSketch = () => {
-    let button = document.createElement("button");
-    button.textContent = "Start";
-    let btn = document.getElementById("start")
+    let button = document.createElement('button');
+    button.textContent = 'Start';
+    let btn = document.getElementById('start')
     btn.appendChild(button);
-    button.addEventListener("click", startBlack);
-    createCanvas(blocksPerPage);
+    button.addEventListener('click', startBlack);
+    createCanvas();
 }
 
 let reset = () => {
-    let button1 = document.createElement("button");
-    button1.textContent = "Reload";
-    let btn1 = document.getElementById("reload");
+    let button1 = document.createElement('button');
+    button1.textContent = 'Reload';
+    let btn1 = document.getElementById('reload');
     btn1.appendChild(button1)
-    button1.addEventListener("click", reloadWindow);
-    createCanvas(blocksPerPage);
+    button1.addEventListener('click', reloadWindow);
+    createCanvas();
 }
 
 let erase = () => {
-    let button2 = document.createElement("button");
-    button2.textContent = "Erase";
-    let btn2 = document.getElementById("eraser");
+    let button2 = document.createElement('button');
+    button2.textContent = 'Erase';
+    let btn2 = document.getElementById('eraser');
     btn2.appendChild(button2);
-    button2.addEventListener("click", eraser);
-    createCanvas(blocksPerPage);
+    button2.addEventListener('click', eraser);
+    createCanvas();
 }
 
 reset();
