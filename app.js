@@ -1,83 +1,60 @@
-const createCanvas = (blocksPerPage) => {
-    let container = document.querySelector('#grid-container');
-    let blocks = container.querySelectorAll('div');
-    blocks.forEach((div) => div.remove());
-    container.style.gridTemplateColumns = `repeat(${blockPerPage}, 1fr)`;
-    container.style.gridTemplateRows = `repeat(${blocksPerPage}, 1fr)`;
+let color = "black";
+let click = true;
 
-
-    let amount = blocksPerPage * blocksPerPage;
-    for(let i = 0; i < amount; i++){
-        let block = document.createElement('div');
-        block.style.backgroundColor = 'white';
-        container.insertAdjacentElement('beforeend', block);
+function populateBoard(size) {
+    let board = document.querySelector(".board");
+    let squares = board.querySelectorAll("div");
+    squares.forEach((div) => div.remove());
+    board.style.gridTemplateColumns = `repeat(${size} , 1fr)`;
+    board.style.gridTemplateRows = `repeat(${size} , 1fr)`;
+  
+    let amount = size * size;
+    for (let i = 0; i < amount; i++) {
+      let square = document.createElement("div");
+      square.addEventListener("mouseover", colorSquare);
+      square.style.backgroundColor = "white";
+      board.insertAdjacentElement("beforeend", square);
     }
-}
-
-createCanvas(16);
+  }
+  
+  populateBoard(16);
 
 let changeSize = (input) => {
     if(input >= 2 || input <= 100){
         document.querySelector(".error").style.display = "none";
-        createCanvas(input);
+        populateBoard(input);
     }else{
         document.querySelector(".error").style.display = "flex";
     }
 }
 
-let startColoring = (e) => {
-    if (e.target !== e.currentTarget) {
-        e.target.style.background = 'black';
+function colorSquare() {
+    if (click) {
+      if (color === "random") {
+        this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      } else {
+        this.style.backgroundColor = color;
+      }
     }
-    e.stopPropagation();
-}
-
-let clear = (e) => {
-    if (e.target !== e.currentTarget) {
-        e.target.style.background = 'white';
+  }
+  
+  function changeColor(choice) {
+    color = choice;
+  }
+  
+  function resetBoard() {
+    let board = document.querySelector(".board");
+    let squares = board.querySelectorAll("div");
+    squares.forEach((div) => (div.style.backgroundColor = "white"));
+  }
+  
+  document.querySelector("body").addEventListener("click", (e) => {
+    if (e.target.tagName != "BUTTON") {
+      click = !click;
+      if (click) {
+        document.querySelector(".mode").textContent = "Mode: Coloring";
+      } else {
+        document.querySelector(".mode").textContent = "Mode: Not Coloring";
+      }
     }
-    e.stopPropagation();
-}
-
-let reloadWindow = () => {
-    location.reload();
-}
-
-let eraser = () => {
-    container.addEventListener('mouseover', clear);
-}
-
-let startBlack = () => {
-    container.addEventListener('mouseover', startColoring);
-}
-
-let startSketch = () => {
-    let button = document.createElement('button');
-    button.textContent = 'Start';
-    let btn = document.getElementById('start')
-    btn.appendChild(button);
-    button.addEventListener('click', startBlack);
-    createCanvas();
-}
-
-let reset = () => {
-    let button1 = document.createElement('button');
-    button1.textContent = 'Reload';
-    let btn1 = document.getElementById('reload');
-    btn1.appendChild(button1)
-    button1.addEventListener('click', reloadWindow);
-    createCanvas();
-}
-
-let erase = () => {
-    let button2 = document.createElement('button');
-    button2.textContent = 'Erase';
-    let btn2 = document.getElementById('eraser');
-    btn2.appendChild(button2);
-    button2.addEventListener('click', eraser);
-    createCanvas();
-}
-
-reset();
-erase();
-startSketch();
+  });
